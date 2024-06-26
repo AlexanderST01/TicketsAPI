@@ -20,12 +20,12 @@ public class TicketsController(Contexto _context) : ControllerBase
     public async Task<ActionResult<IEnumerable<TicketResponse>>> GetTickets()
     {
         var Tickets = await _context.Tickets.ToListAsync();
-        var TicketResponse = Tickets.Select(t => new TicketResponse
+        var TicketResponse = Tickets.Select(p => new TicketResponse
         {
-            TicketId = t.TicketId,
-            Descripcion = t.Descripcion,
-            Fecha = t.Fecha,
-            Precio = t.Precio
+            TicketId = p.TicketId,
+            Descripcion = p.Descripcion,
+            Fecha = p.Fecha,
+            Precio = p.Precio
         }).ToList();
 
         return Ok(TicketResponse);
@@ -69,40 +69,6 @@ public class TicketsController(Contexto _context) : ControllerBase
         await _context.SaveChangesAsync();
 
         return CreatedAtAction("GetTickets", new { id = articulo.TicketId }, articulo);
-
-        //if (TicketDescripcionExiste(Tickets.Descripcion!))
-        //{
-        //    var ticketAux = await _context.Tickets
-        //    .FirstOrDefaultAsync(a => a.Descripcion == Tickets.Descripcion);
-        //    if (ticketAux == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    ticketAux.Descripcion = Tickets.Descripcion;
-        //    ticketAux.Precio = Tickets.Precio;
-        //    ticketAux.Fecha = Tickets.Fecha;
-
-        //    _context.Entry(ticketAux).State = EntityState.Modified;
-        //    await _context.SaveChangesAsync();
-
-        //    return Ok(ticketAux);
-        //}
-        //else
-        //{
-        //    var ticket = new Tickets
-        //    {
-        //        TicketId = 0,
-        //        Descripcion = Tickets.Descripcion,
-        //        Precio = Tickets.Precio,
-        //        Fecha = Tickets.Fecha
-        //    };
-
-        //    _context.Tickets.Add(ticket);
-        //    await _context.SaveChangesAsync();
-
-        //    return CreatedAtAction("GetTikets", new { id = ticket.TicketId }, ticket);
-        //}
     }
 
     // PUT: api/Tickets/5
